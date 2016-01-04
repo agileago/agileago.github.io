@@ -180,6 +180,72 @@
           
           
             
+              <a class="post-title-link" href="/2016/01/04/position-sticky使用条件/">
+                position:sticky使用条件
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2016-01-04
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/01/04/position-sticky使用条件/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/04/position-sticky使用条件/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>哪些浏览器支持，可以查看：<a href="http://caniuse.com/#search=sticky" target="_blank" rel="external">caniuse</a><br>用这个属性，主要是ios下的safari已经支持了，在ios下可以免去js模拟，效果更平滑。<br>在移动端模拟sticky效果，还是非常蛋疼的，需要同时监听touchmove和scroll事件，页面惯性滚动时会有一定的延迟（scorll事件在滚动停止才触发），同时移动端对fixed定位支持也不大好。JS实现，效果还是大打则扣。<br>关于这个position:sticky的介绍，可以google一下，网上有很多介绍了，比如神飞的《position:sticky介绍》。<br>今天主要讲的是，position:sticky的使用条件，很多同学经常遇到position:sticky失效的情况，今天对sticky这个属性做了一番调试，总结了一些规律。现分享下。<br>俗话说，弄不清楚原理，就熟记结论也是一样的，那就先抛结论，sticky满足以下条件才能生效：<br>1、具有sticky属性的元素，其父级高度必须大于sticky元素的高度。<br>2、sticky元素的底部，不能和父级底部重叠。<br>3、sticky元素的父级不能含有overflow:hidden 和 overflow:auto 属性<br>4、必须具有top，或 bottom 属性。<br>同时要注意，sticky元素仅在他父级容器内有效，超出容器范围则不再生效了。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/08/解决webstorm本地IP不能预览页面/">
                 解决webstorm本地IP不能预览页面
               </a>
@@ -792,79 +858,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/16/js是如何改变开发环境的/">
-                js是如何改变开发环境的
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-16
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/16/js是如何改变开发环境的/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/js是如何改变开发环境的/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p> js创始人始终想不到他无意间创造的一门垃圾语言竟然在默默的改变世界.</p>
-</blockquote>
-<p><img src="/imgs/js_change_word.png" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/16/js是如何改变开发环境的/#more">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -903,7 +896,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -971,8 +964,8 @@
       <div class="footer-inner">
         <div class="copyright">
   
-  &copy; &nbsp; 
-  2015
+  &copy; &nbsp;  2015 - 
+  2016
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
