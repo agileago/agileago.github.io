@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="webstorm," />
+  <meta name="keywords" content="js," />
 
 
 
@@ -57,7 +57,7 @@
 
 
 
-  <title> 解决webstorm本地IP不能预览页面  </title>
+  <title> 数据驱动和组件化  </title>
 </head>
 
 <body>
@@ -178,7 +178,7 @@
           
           
             
-              解决webstorm本地IP不能预览页面
+              数据驱动和组件化
             
           
         </h1>
@@ -186,7 +186,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-11-08
+          发表于 2016-01-25
         </span>
 
         
@@ -195,8 +195,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/11/08/解决webstorm本地IP不能预览页面/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/08/解决webstorm本地IP不能预览页面/"></span>
+            <a href="/2016/01/25/数据驱动和组件化/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/25/数据驱动和组件化/"></span>
             </a>
           </span>
           
@@ -210,8 +210,16 @@
       
 
       
-        <p>webstorm很强大，并且有个预览页面的功能，默认是localhost,但有时候你想在手机上看效果，换上本地IP后<br>发现访问不了页面，在网上百度了一大圈，发现回答的都是牛头不对马嘴，没有一个答案是正确的，我只想说闲人太多，呵呵，<br>就在特苦闷的时候，我一不小心按了一下退格键，把端口号从5位变成了4位，发现竟然可以用本地IP访问了，真是……</p>
-<p>解决方案：  把端口号从5为换成4位</p>
+        <h3 id="前言">前言</h3><p>最近花了很长一段时间学习<code>vue</code>和<code>webpack</code>,感觉确实对自己有很大的提高，关键是他们的思想非常的认可，<br>他们主要的思想就是模块化、数据驱动、组件化，下面注意详解最近的学习所得。<br><a id="more"></a></p>
+<h3 id="模块化">模块化</h3><p>这个话题已经是讨论了很久的东西，但是到现在居然大部分人竟然没有一个统一的共识，还是呈现分裂局面，主要分裂为AMD和CommonJS,<br>AMD就是异步加载模块，他的核心思想就是我需要一个模块的时候，这个模块的依赖什么的都异步通过添加<code>script</code>标签的方式加载执行，<br>这样就会导致一个页面请求过多的问题，另外一个就是node社区提出的CommonJS规范，比较赞！，但是有一个缺点就是必须通过构建工具<br>来进行打包，比如需要学习<code>browserify</code>或者<code>webpack</code>,最后制定标准的人看不下去了，ES6首先就把模块加上了 使用类似java的语法<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br></pre></td></tr></table></figure></p>
+<p>不过这个语法需要<code>babel</code>转换成CommonJS的语法才能在浏览器里面执行，写到这里估计很多人就要开始叫了，你说得这都是啥啥啥！是不是有种<br>王宝强要账看欠条的即视感，我已开始也是这样子的，不过现在前端是个发展相当快的时代，技术更新相当快，因为前端暂时还没形成一个最佳实践<br>，所以需要紧跟上前端的步伐就是要不断试错，学习新的东西，好了，插了这么多东西，咱们说回来吧，最终大家基本上形成了模块化的标准，就是ES6<br>的标准，这也是我现在正在使用的模块化解决方案，模块化需要学习的技术<br><code>ES6</code><br><code>webpack</code><br><code>CommonJS</code>  </p>
+<h3 id="数据驱动">数据驱动</h3><p>先看一段代码，我们是如何实现从服务器端拿到数据渲染到界面上的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$.get(url)</span><br><span class="line">  .done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;  <span class="comment">// 假设data是个数组</span></span><br><span class="line">      <span class="keyword">var</span> html = <span class="string">'&lt;ul&gt;'</span></span><br><span class="line">      data.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">          html += <span class="string">'&lt;li&gt;'</span> + item + <span class="string">'&lt;/li&gt;'</span></span><br><span class="line">        &#125;)</span><br><span class="line">      html += <span class="string">'&lt;/ul&gt;'</span></span><br><span class="line">      $(<span class="string">'#insert'</span>).html(html)</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="comment">// 如果这段html里面需要一些事件绑定的话还需要初始化事件</span></span><br><span class="line">  initEvent()</span><br></pre></td></tr></table></figure></p>
+<p>也许有些同学觉得对啊！这就是我们现在写代码的姿势啊，不过你这个比较low，我们用了模板自动渲染数据生成html，<br>不过殊途同归了，基本的写法都是差不多，相信很多人现在还是这样一种写前端代码方式，我一开始写页面的时候也是这样写的<br>，当时并没有觉得有什么不妥，既然大家都这样写，那我写代码的姿势应该是没问题的，后来越写这样的代码觉得相当不爽，<br>特别烦人，改个东西从几百行这种命令代码（面条代码）里面找到那个key，然后抽死剥茧般改一些东西，实在是写的特别恼火，<br>后来偶然间看到@尤小右 推荐他写的<code>vue</code> （读view）库，然后看了看文档，当时就有一种这就是我苦苦寻找的东西。再看下面用<br>vue写的代码实现相似的功能<br><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">// html</span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">v-for</span>=<span class="value">"item in data"</span> @<span class="attribute">click</span>=<span class="value">"click"</span>&gt;</span></span><span class="expression">&#123;&#123; <span class="variable">item</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">  <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">'body'</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        data: []</span><br><span class="line">      &#125;,</span><br><span class="line">      ready: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $.get(url).done(d =&gt; <span class="keyword">this</span>.data = d)   <span class="comment">// 用了es6的箭头函数</span></span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        click: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">          <span class="comment">// bla bla</span></span><br><span class="line">          <span class="built_in">console</span>.log(e)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>相当简洁，特别清爽，告别手拼html的烦恼，操作dom即是操作数据，再也不用写那种面条代码了，这样就引出了咱们今天要说的<strong>数据驱动</strong>,咱们可以转换一下思想，界面上的所有展示的东西，其实都是数据，界面的某一部分变化了，说明了数据在变化，那么我们可以想象假如说我们改变界面上的数据，界面自动变化他应有的样子，那样多好，而像angularjs、vue就是提供这样一种实现，所以angularjs一出来就火的一塌糊涂，不过我不太推荐大家去看angularjs，因为里面概念太繁琐，并且性能也不太好，当时还专门买了一本书看angularjs,看到一半直接扔书架上堆灰尘了，后来有了vue，觉得这个库的api设计的相当精良，优雅，普通开发者看几遍文档真的就可以上手写代码了，并且能极快的提高开发效率，节约大把时间陪妹子或者调戏妹子，简单地讲，数据驱动就是把界面映射为数据，操作数据界面自动变化，响应式编程</p>
+<h3 id="组件化">组件化</h3><p>有了数据驱动确实解决了我们不少问题，但是写着写着你会发现，你如果需要一个表格插件，还是需要引入很多东西，这时就想界面能不能长这个样子<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">header</span>&gt;</span><span class="tag">&lt;/<span class="title">heade</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">menu</span>&gt;</span><span class="tag">&lt;/<span class="title">menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">hello</span>&gt;</span><span class="tag">&lt;/<span class="title">hello</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ajax-table</span> <span class="attribute">url</span>=<span class="value">"url"</span>&gt;</span><span class="tag">&lt;/<span class="title">ajax-table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">footer</span>&gt;</span><span class="tag">&lt;/<span class="title">footer</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>写成标签式写法，简洁又高度封装，少年，你能有这样想法真的是好青年，这就是大家一直在追求的组件化，<br>一切皆组件，而<code>vue</code>就提供了封装组件的方法，最简单的封装组建的方法是<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 生成一个组件的构造函数</span><br><span class="line"><span class="keyword">var</span> <span class="type">Hello</span> = <span class="type">Vue</span>.extend(&#123;</span><br><span class="line">    <span class="keyword">template</span>: '&lt;<span class="keyword">div</span>&gt;&#123;&#123;msg&#125;&#125;&lt;/<span class="keyword">div</span>&gt;',</span><br><span class="line">    data: function() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;msg: 'hello'&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">// 注册一个组件</span><br><span class="line"><span class="type">Vue</span>.component('hello', <span class="type">Hello</span>)</span><br></pre></td></tr></table></figure></p>
+<p>这样你就可以在页面里面用<hello></hello>标签了，它自动会把hello替换成你的模板，并且带上响应式数据，<br>这样就给了我们无限的想象力，我可以封装一个轮播，我可以封装一个….,但有时候一个组件是需要css,js,html三者<br>在一起的，vue给我们提供了单文件组件的封装，不过这需要借助webpack的打包机制，具体功能请去google搜vue,看一下官方文档，<br>相信你会喜欢上vue的。</p>
+<h3 id="结语">结语</h3><p><strong>数据驱动</strong>和<strong>组件化</strong> 应该是前端发展到现在探索出来的相当棒的方案，也是以后前端发展的方向，小伙伴赶紧学习一下，替换现有的<br>技术栈，早日进入数据和组件的海洋。</p>
 
       
     </div>
@@ -220,7 +228,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/webstorm/"> #webstorm </a>
+            <a href="/tags/js/"> #js </a>
           
         </div>
       
@@ -229,13 +237,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/04/position-sticky使用条件/">position:sticky使用条件</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/15/windows下git的安装以及一些问题/">windows下git的安装以及一些问题</a>
+              <a href="/2016/01/04/position-sticky使用条件/">position:sticky使用条件</a>
             
           </div>
         </div>
@@ -250,10 +256,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/08/解决webstorm本地IP不能预览页面/"
-     data-title="解决webstorm本地IP不能预览页面"
+        <div class="ds-share flat" data-thread-key="2016/01/25/数据驱动和组件化/"
+     data-title="数据驱动和组件化"
      data-content=""
-     data-url="http://agileago.com/2015/11/08/解决webstorm本地IP不能预览页面/">
+     data-url="http://agileago.com/2016/01/25/数据驱动和组件化/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -274,8 +280,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/11/08/解决webstorm本地IP不能预览页面/"
-               data-title="解决webstorm本地IP不能预览页面" data-url="http://agileago.com/2015/11/08/解决webstorm本地IP不能预览页面/">
+          <div class="ds-thread" data-thread-key="2016/01/25/数据驱动和组件化/"
+               data-title="数据驱动和组件化" data-url="http://agileago.com/2016/01/25/数据驱动和组件化/">
           </div>
         
       </div>
@@ -384,7 +390,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化"><span class="nav-number">2.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据驱动"><span class="nav-number">3.</span> <span class="nav-text">数据驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件化"><span class="nav-number">4.</span> <span class="nav-text">组件化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
